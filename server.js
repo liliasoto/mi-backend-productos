@@ -15,7 +15,10 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true 
 })
 .then(() => console.log('Conectado a MongoDB'))
-.catch(err => console.error('Error de conexión a MongoDB:', err));
+.catch(err => {
+  console.error('Error de conexión a MongoDB:', err);
+  process.exit(1);
+});
 
 // Definir el esquema del producto
 const productSchema = new mongoose.Schema({
