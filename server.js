@@ -9,39 +9,61 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Conectar a MongoDB
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+// Conexión a MongoDB
+mongoose.connect(process.env.MONGODB_URI, { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true 
+})
+.then(() => console.log('Conectado a MongoDB'))
+.catch(err => console.error('Error de conexión a MongoDB:', err));
 
-// Definir el modelo de Producto
-const Product = mongoose.model('Product', {
-  name: String,
-  price: Number,
-  description: String
+// Definir el esquema del producto
+const productSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  price: { type: Number, required: true },
+  description: { type: String, required: true }
 });
 
-// Rutas
-app.get('/api/products', async (req, res) => {
-  const products = await Product.find();
-  res.json(products);
-});
+// Crear el modelo de Producto
+const Product = mongoose.model('Product', productSchema);
 
+// Rutas CRUD
 app.post('/api/products', async (req, res) => {
-  const product = new Product(req.body);
-  await product.save();
-  res.status(201).json(product);
+  try {
+    const product = new Product(req.body);
+    await product.save();
+    res.status(201).json(product);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.get('/api/products', async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 app.put('/api/products/:id', async (req, res) => {
-  const { id } = req.params;
-  await Product.findByIdAndUpdate(id, req.body);
-  res.sendStatus(200);
+  try {
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(product);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
 
 app.delete('/api/products/:id', async (req, res) => {
-  const { id } = req.params;
-  await Product.findByIdAndDelete(id);
-  res.sendStatus(200);
+  try {
+    await Product.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Producto eliminado' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
