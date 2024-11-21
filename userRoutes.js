@@ -1,34 +1,52 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
-require('dotenv').config();
+const router = express.Router();
 
-const app = express();
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-
-// Conexión a MongoDB
-mongoose.connect(process.env.MONGODB_URI, { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true 
-})
-.then(() => console.log('Conectado a MongoDB'))
-.catch(err => {
-  console.error('Error de conexión a MongoDB:', err);
-  process.exit(1);
+// Definir el esquema del usuario
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  phoneNumber: { type: String, required: true }
 });
 
-// Importar rutas
-const productRoutes = require('./productRoutes');
-const userRoutes = require('./userRoutes');
+// Crear el modelo de Usuario
+const User = mongoose.model('User', userSchema);
 
-// Usar rutas
-app.use('/api/products', productRoutes);
-app.use('/api/users', userRoutes);
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+// Rutas CRUD para usuarios
+router.post('/', async (req, res) => {
+  try {
+    const user = new User(req.body);
+    await user.save();
+    res.status(201).json(user);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
+
+router.get('/', async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.put('/:id', async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(user);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Usuario eliminado' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+module.exports = router;
