@@ -25,12 +25,14 @@ const productRoutes = require('./productRoutes');
 const userRoutes = require('./userRoutes');
 const usuariosRoutes = require('./usuariosRoutes');
 const medicionRoutes = require('./medicionRoutes');
+const alarmasRoutes = require('./alarmasRoutes');
 
 // Usar rutas
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/', usuariosRoutes);
 app.use('/', medicionRoutes);
+app.use('/alarmas', alarmasRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, '0.0.0.0', () => {
