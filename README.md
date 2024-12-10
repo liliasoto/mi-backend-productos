@@ -204,4 +204,4 @@ Authorization: Bearer <token>
 
 ## Soporte
 
-Para soporte, contactar a [0.lilia.soto.0@gmail.com](0.lilia.soto.0@gmail.com)
+Para soporte, contactar a 0.lilia.soto.0@gmail.com
