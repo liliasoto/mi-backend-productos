@@ -2,12 +2,11 @@
 
 API RESTful desarrollada con Node.js, Express y MongoDB para la aplicación VitalCheck de monitoreo de signos vitales.
 
-## Tecnologías Utilizadas
+## Tecnologías utilizadas
 
 - Node.js
 - Express.js
-- MongoDB
-- JWT para autenticación
+- MongoDB Atlas
 - Cors
 - Dotenv
 
@@ -18,10 +17,11 @@ backend/
 ├── server.js               # Punto de entrada de la aplicación
 ├── usuariosRoutes.js       # Rutas para gestión de usuarios
 ├── medicionesRoutes.js     # Rutas para gestión de mediciones
+├── alarmasRoutes.js        # Rutas para gestión de alarmas
 └── .env                # Variables de entorno
 ```
 
-## Requisitos Previos
+## Requisitos previos
 
 - Node.js (v14 o superior)
 - MongoDB
@@ -92,6 +92,26 @@ npm start
   - Eliminar medición
   - Requiere token JWT
 
+### Alarmas
+
+- POST /api/alarmas
+  - Crear nueva alarma
+  - Requiere token JWT
+  - Body: { hora, días, nombre, habilitada }
+
+- GET /api/alarmas
+  - Obtener alarmas del usuario
+  - Requiere token JWT
+  - Query params: { fecha_inicio, fecha_fin }
+
+- GET /api/alarmas/:id
+  - Obtener alarma específica
+  - Requiere token JWT
+
+- DELETE /api/alarmas/:id
+  - Eliminar alarma
+  - Requiere token JWT
+
 ## Autenticación
 
 La API utiliza JWT (JSON Web Tokens) para la autenticación. Para acceder a rutas protegidas:
@@ -102,7 +122,7 @@ La API utiliza JWT (JSON Web Tokens) para la autenticación. Para acceder a ruta
 Authorization: Bearer <token>
 ```
 
-## Modelos de Datos
+## Modelos de datos
 
 ### Usuario
 ```javascript
@@ -124,16 +144,27 @@ Authorization: Bearer <token>
 }
 ```
 
+### Alarma
+```javascript
+{
+  usuario_id: ObjectId,
+  time: String, 
+  days: String, 
+  name: String, 
+  enabled: Boolean, 
+}
+```
+
 ## Despliegue
 
-### Preparación para Producción
+### Preparación para producción
 
 1. Configurar variables de entorno de producción
 2. Asegurar conexión MongoDB
 3. Configurar CORS según dominio de producción
 4. Implementar logging adecuado
 
-### Recomendaciones de Hosting
+### Recomendaciones de hosting
 
 - Render
 - Heroku
@@ -141,7 +172,7 @@ Authorization: Bearer <token>
 - AWS EC2
 - MongoDB Atlas (para la base de datos)
 
-## Scripts Disponibles
+## Scripts disponibles
 
 - `npm start`: Inicia el servidor
 - `npm run dev`: Inicia el servidor en modo desarrollo
@@ -173,4 +204,4 @@ Authorization: Bearer <token>
 
 ## Soporte
 
-Para soporte, contactar a [0.lilia.soto.0@gmail.com]
+Para soporte, contactar a [0.lilia.soto.0@gmail.com](0.lilia.soto.0@gmail.com)
