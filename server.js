@@ -26,6 +26,7 @@ const userRoutes = require('./userRoutes');
 const usuariosRoutes = require('./usuariosRoutes');
 const medicionRoutes = require('./medicionRoutes');
 const alarmasRoutes = require('./alarmasRoutes');
+const clientesRoutes = require('./clientesRoutes');
 
 
 // Usar rutas
@@ -34,6 +35,7 @@ app.use('/api/users', userRoutes);
 app.use('/', usuariosRoutes);
 app.use('/', medicionRoutes);
 app.use('/alarmas', alarmasRoutes);
+app.use('/clientes', clientesRoutes);
 
 
 const PORT = process.env.PORT || 5000;
