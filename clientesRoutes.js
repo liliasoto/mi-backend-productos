@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const router = express.Router();
 
 const vendedoresEsquema = new mongoose.Schema({
-    numero_cliente: { type: Number, required: true, unique: true },
+    numero_cliente: { type: String, required: true },
     nom_ferre: { type: String, required: true },
     ciudad: { type: String, required: true },
     estado: { type: String, required: true },
