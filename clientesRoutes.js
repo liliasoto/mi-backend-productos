@@ -9,7 +9,6 @@ const vendedoresEsquema = new mongoose.Schema({
     estado: { type: String, required: true },
     nom_encargado: { type: String, required: true },
     telefono: { type: String, required: true },
-    texto_cliente: { type: String, required: true },
     imagen: { type: String, required: true },
     cliente_nuestro: { type: Boolean, required: true },
     ubicacion: {type: String, required: true }
