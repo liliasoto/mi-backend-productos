@@ -17,7 +17,7 @@ const villarealaregreapisoEsquema = new mongoose.Schema({
     preciometropub_villa_productos:{type:String,required:true},
     preciocajpub_villa_productos:{type:String,required:true},
     proveedornom_villa_productos:{type:String,required:true},
-    imagen_villa_productos:{type:String,required:true},
+    imagen_villa_productos:{type:String | File ,required:true},
     tipo_villa_productos:{type:String,required:true},
     inventario_villa_productos:{type:String},
     inventario_villa_productos2:{type:String},
