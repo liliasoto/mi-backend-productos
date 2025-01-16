@@ -31,6 +31,10 @@ const ModVillarealagregarpisos = mongoose.model('Villarealagregarpisos', villare
 
 router.post('/', upload.single('imagen_villa_productos'), async (req, res) => {
     try {
+        if (!req.file) {
+            throw new Error('No se ha proporcionado ninguna imagen');
+        }
+
         // Subir la imagen a Cloudinary
         const result = await cloudinary.uploader.upload(req.file.path, {
             upload_preset: 'unsigned_upload',
@@ -52,7 +56,8 @@ router.post('/', upload.single('imagen_villa_productos'), async (req, res) => {
         // Responder con el objeto guardado
         res.status(201).json(vendedorpost);
     } catch (error) {
-        res.status(500).json({ message: 'Error al subir la imagen a Cloudinary', error });
+        console.error('Error al procesar la solicitud:', error);
+        res.status(500).json({ message: 'Error al procesar la solicitud', error: error.message });
     }
 });
 /*
