@@ -28,7 +28,7 @@ const usuariosRoutes = require('./usuariosRoutes');
 const medicionRoutes = require('./medicionRoutes');
 const alarmasRoutes = require('./alarmasRoutes');
 const clientesRoutes = require('./clientesRoutes');
-const pisosRoutes=require('./villarealagregarpisos');
+const villarealagregarpisos = require('./villarealagregarpisos');
 
 
 // Usar rutas
@@ -38,7 +38,8 @@ app.use('/', usuariosRoutes);
 app.use('/', medicionRoutes);
 app.use('/alarmas', alarmasRoutes);
 app.use('/clientes', clientesRoutes);
-app.use('/agregarpisos',pisosRoutes);
+app.use('/villarealagregarpisos', villarealagregarpisos);
+
 
 
 const PORT = process.env.PORT || 5000;

@@ -7,8 +7,6 @@ const upload = multer({ dest: 'uploads/' }); // Configuración de multer para gu
 
 const villarealaregreapisoEsquema = new mongoose.Schema({
 
-
-   
     num_villa_productos:{type:String,required:true},
     medida_vila_productos:{type:String,required:true},
     nombre_villa_productos:{type:String,required:true},
